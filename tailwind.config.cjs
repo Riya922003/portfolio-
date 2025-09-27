@@ -1,6 +1,5 @@
-import type { Config } from 'tailwindcss'
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
@@ -10,7 +9,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // map neutral color tokens used in the project
         neutral: {
           200: 'hsl(0 0% 80%)',
           300: 'hsl(0 0% 70%)',
@@ -24,5 +22,3 @@ const config: Config = {
   },
   plugins: []
 }
-
-export default config
