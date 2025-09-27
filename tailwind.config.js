@@ -1,4 +1,4 @@
-// This file was moved to config-backups/tailwind.config.js.bak
-// The project uses `tailwind.config.ts` instead. Keep this file only as a placeholder.
-module.exports = {}
+// Re-export the CJS Tailwind config so tools that expect `tailwind.config.js`
+// can find the `content` array and other settings.
+module.exports = require('./tailwind.config.cjs')
 

@@ -67,3 +67,48 @@
     color: hsl(var(--foreground));
   }
 }
+
+/* small helper for a colorful ring used on hover */
+.ring-gradient {
+  background: linear-gradient(90deg, rgba(255,0,150,0.9), rgba(100,75,255,0.9), rgba(0,200,255,0.9));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Animated thin lines background (subtle) */
+.animated-lines::before,
+.animated-lines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(90deg, rgba(100,150,255,0.03) 1px, transparent 1px);
+  background-size: 20px 100%;
+  transform: translateZ(0);
+  animation: slide-lines 8s linear infinite;
+}
+.animated-lines::after {
+  background-image: linear-gradient(180deg, rgba(100,150,255,0.02) 1px, transparent 1px);
+  background-size: 100% 24px;
+  animation-duration: 12s;
+  opacity: 0.7;
+}
+
+@keyframes slide-lines {
+  from { transform: translateX(0); }
+  to { transform: translateX(-20px); }
+}
+
+/* marquee */
+.marquee { height: 34px; }
+.marquee-track { display: inline-flex; align-items: center; gap: 12px; transform: translateX(0); animation: marquee 18s linear infinite; }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track, .animated-lines::before, .animated-lines::after { animation: none !important; }
+}
+
