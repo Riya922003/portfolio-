@@ -12,6 +12,7 @@ import ElectricBorder from '@/components/ElectricBorder'
 const PixelCard = dynamic(() => import('@/components/PixelCard'), { ssr: false })
 const RippleGrid = dynamic(() => import('@/components/RippleGrid'), { ssr: false })
 const Particles = dynamic(() => import('@/components/Particles'), { ssr: false })
+import InsideScoopCard from '@/components/InsideScoopCard'
 import { Users } from 'lucide-react'
 
 import { useEffect } from 'react'
@@ -235,9 +236,7 @@ const Home = () => {
                         {/* Card C2: Availability (beside Globe to complete bento) */}
                         <div className="p-6 rounded-lg border border-neutral-800 bg-neutral-900/50 backdrop-blur-sm overflow-hidden md:col-span-2 lg:col-span-1 md:row-span-2 flex flex-col items-center text-center relative">
                             {/* floating top-right pill */}
-                            <div className="absolute top-3 right-3 z-20">
-                                <span className="px-3 py-1 bg-neutral-800/40 rounded text-xs">Remote • Contract</span>
-                            </div>
+                            
 
                             <h4 className="font-semibold text-2xl lg:text-3xl mb-2">Availability</h4>
                             <p className="text-sm text-neutral-400 mb-3">Open to new projects — I work remotely and can overlap core hours for meetings.</p>
@@ -268,25 +267,8 @@ const Home = () => {
                         </div>
 
                         {/* Card D: CTA with Lottie (Medium) */}
-                        <div className="p-4 rounded-lg border border-neutral-300 bg-white overflow-hidden md:col-span-2 lg:col-span-2 flex items-center justify-center h-full relative">
-                            {/* RippleGrid background for CTA */}
-                            <div className="absolute inset-0 z-0 pointer-events-none">
-                                <RippleGrid opacity={0.08} gridColor="#60a5fa" gridSize={10.0} gridThickness={10.0} glowIntensity={0.05} />
-                            </div>
-                            {/* ParticleConstellation removed here per request */}
-                            <div className="flex items-center gap-6 w-full relative z-10">
-                                <div className="w-56 h-56 flex items-center justify-center">
-                                    {/* subtle centered badge instead of large blue circle */}
-                                    <div className="rounded-full bg-neutral-800 border border-neutral-700 w-40 h-40 flex items-center justify-center">
-                                        <Users className="w-10 h-10 text-neutral-200" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 className="text-lg font-semibold text-black">Let's work together</h4>
-                                    <p className="text-sm text-black mb-3">Have a project in mind or a complex problem to solve? My inbox is always open. Let's connect and chat about it.</p>
-                                    <Button>Contact me</Button>
-                                </div>
-                            </div>
+                        <div className="p-4 rounded-lg border border-neutral-800 bg-neutral-900/40 backdrop-blur-sm overflow-hidden md:col-span-2 lg:col-span-2 h-full relative">
+                            <InsideScoopCard />
                         </div>
 
                         {/* Card 5: Project Showcase (Small) */}
