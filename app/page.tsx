@@ -89,18 +89,20 @@ const Home = () => {
                             <h1 className="text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 text-center">Riya Gupta</h1>
 
                             <div className="relative mt-2">
-                                {/* outer decorative frame (gradient border) */}
-                                <div className="w-[420px] h-[420px] rounded-full p-2 bg-gradient-to-tr from-rose-500 via-violet-500 to-cyan-500 flex items-center justify-center">
-                                    <div className="w-full h-full rounded-full bg-neutral-900/80 flex items-center justify-center">
-                                        <Image
-                                            src="/assets/images/profile.jpg"
-                                            width={320}
-                                            height={320}
-                                            alt="Riya Gupta"
-                                            className="rounded-full object-cover w-[320px] h-[320px]"
-                                        />
+                                {/* outer decorative frame replaced with ElectricBorder for consistent effect */}
+                                <ElectricBorder color="#7df9ff" speed={1} chaos={0.6} thickness={2} className="rounded-full inline-block" style={{}}>
+                                    <div className="w-[420px] h-[420px] rounded-full p-2 flex items-center justify-center">
+                                        <div className="w-full h-full rounded-full bg-neutral-900/80 flex items-center justify-center">
+                                            <Image
+                                                src="/assets/images/profile.jpg"
+                                                width={320}
+                                                height={320}
+                                                alt="Riya Gupta"
+                                                className="rounded-full object-cover w-[320px] h-[320px]"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
+                                </ElectricBorder>
                             </div>
 
                             <div className="mt-6">
