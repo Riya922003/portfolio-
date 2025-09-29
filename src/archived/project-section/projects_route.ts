@@ -1,42 +1,31 @@
+// archived copy of src/app/api/projects/route.ts
 import { NextResponse } from 'next/server'
 
-// Run this route in the Edge runtime so returning NextResponse/Response is supported
+// archived content
 export const runtime = 'edge'
 
 export async function GET() {
   try {
-    // If DATABASE_URL is not set in the environment, avoid importing the DB helper
-    // (which could throw at module-import time) and return an empty list so the
-    // client can render fallback UI while development config is fixed.
     if (!process.env.DATABASE_URL) {
       console.warn('DATABASE_URL not set; returning empty projects list from /api/projects')
       const res = NextResponse.json([], { status: 200 })
-      // Signal to clients that this is a server-side configuration issue
       res.headers.set('x-projects-error', 'true')
       return res
     }
 
-    // Log redacted info about DATABASE_URL to help debug whether env was loaded
     try {
       const raw = process.env.DATABASE_URL
       const redacted = raw ? `${raw.slice(0, 12)}...[redacted]` : 'none'
       console.info('/api/projects - DATABASE_URL present (redacted):', redacted)
-    } catch (e) {
-      // ignore logging errors
-    }
+    } catch (e) {}
 
-    // Dynamically import DB and schema to avoid import-time errors when env is missing
     const { db } = await import('@/db')
     const { projects } = await import('@/db/schema')
 
     const data = await db.select().from(projects)
     return NextResponse.json(data, { status: 200 })
   } catch (error) {
-    // Log the error server-side for debugging
     console.error('Failed to fetch projects', error)
-    // Return an empty array with a diagnostic header so client fetch doesn't treat
-    // this as a network/HTTP error; the client will still see no projects but the
-    // request will succeed so the UI can render fallback items.
     const res = NextResponse.json([], { status: 200 })
     res.headers.set('x-projects-error', 'true')
     return res

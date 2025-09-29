@@ -13,7 +13,9 @@ const PixelCard = dynamic(() => import('@/components/PixelCard'), { ssr: false }
 const RippleGrid = dynamic(() => import('@/components/RippleGrid'), { ssr: false })
 const Particles = dynamic(() => import('@/components/Particles'), { ssr: false })
 import InsideScoopCard from '@/components/InsideScoopCard'
+import ContactModal from '@/components/ContactModal'
 import { Users } from 'lucide-react'
+import NewProjectCarousel from '@/components/NewProjectCarousel'
 
 import { useEffect } from 'react'
 
@@ -159,6 +161,8 @@ const Home = () => {
                     </div>
                 </section>
 
+                
+
                 {/* Highlights & Arsenal bento grid */}
                 <section className="mt-12">
                     <h2 className="text-2xl font-semibold mb-4">Highlights & Arsenal</h2>
@@ -271,17 +275,28 @@ const Home = () => {
                             <InsideScoopCard />
                         </div>
 
-                        {/* Card 5: Project Showcase (Small) */}
-                        <div className="p-4 rounded-lg border border-neutral-800 bg-neutral-900/50 backdrop-blur-sm overflow-hidden">
-                            <h4 className="font-semibold">Websites that stand out</h4>
-                            <div className="mt-3 rounded-md h-28 flex items-center justify-center overflow-hidden">
-                                <img src="/assets/images/project-thumb.svg" alt="Project thumbnail" className="object-cover w-full h-full rounded-md" />
+                        {/* Card 5: Contact / Standout CTA (Small) */}
+                        <div className="p-6 rounded-lg border border-neutral-300 bg-white overflow-hidden relative">
+                            {/* Ripple grid background like Collaboration card */}
+                            <div className="absolute inset-0 z-0 pointer-events-none">
+                                <RippleGrid opacity={0.12} gridColor="#60a5fa" gridSize={12.0} gridThickness={12.0} glowIntensity={0.06} />
                             </div>
-                            <div className="mt-3">
-                                <a href="/projects" className="text-sm text-rose-400 hover:underline focus:outline-none focus:ring-2 focus:ring-rose-400 rounded" aria-label="Read more about projects">Read More</a>
+
+                            <div className="relative z-10 flex flex-col items-center text-center">
+                                <h4 className="font-semibold text-lg text-black">Let's connect</h4>
+                                <p className="text-sm text-black mt-3">Have a project in mind or a complex problem to solve? My inbox is always open. Let's connect and chat about it.</p>
+
+                                <div className="mt-4">
+                                    {/* Render ContactModal directly (moved out of ElectricBorder) to ensure the trigger is clickable */}
+                                    <ContactModal />
+                                </div>
                             </div>
                         </div>
                     </div>
+                </section>
+                {/* Projects Carousel Section (archived) */}
+                <section className="mt-12">
+                    <NewProjectCarousel />
                 </section>
             </div>
         </main>
