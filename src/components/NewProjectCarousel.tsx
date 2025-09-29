@@ -56,7 +56,7 @@ export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: nu
       <div className="rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900/30 relative">
         <div className="relative w-full" style={{ height: 360 }}>
           <Image
-            src={p.image && p.image.trim() !== '' ? p.image : '/assets/images/placeholder.jpg'}
+            src={p.image && p.image.trim() !== '' ? p.image : '/assets/images/placeholder.png'}
             alt={p.name}
             fill
             className="object-cover"

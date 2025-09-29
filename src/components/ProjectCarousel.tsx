@@ -46,7 +46,7 @@ export default function ProjectCarousel() {
   }, [])
 
   // Map your project data to the format the Carousel component expects
-  const placeholder = '/assets/images/placeholder.jpg';
+  const placeholder = '/assets/images/placeholder.png';
   const fallback = '/assets/images/project-thumb.svg';
 
   const carouselItems: BaseItem[] = projects.map((p) => ({

@@ -120,7 +120,24 @@ const Particles: React.FC<ParticlesProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const renderer = new Renderer({ depth: false, alpha: true });
+    // Detect WebGL availability before creating Renderer to avoid runtime errors
+    const testCanvas = document.createElement('canvas');
+    const glContext = testCanvas.getContext('webgl2') || testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
+    if (!glContext) {
+      // WebGL not supported — fail gracefully
+      // Keep the container empty (or optionally render a fallback) and return
+      // Don't throw — caller should continue rendering the rest of the page
+      console.warn('Particles: WebGL is not available in this environment; skipping particle renderer.');
+      return;
+    }
+
+    let renderer;
+    try {
+      renderer = new Renderer({ depth: false, alpha: true });
+    } catch (err) {
+      console.warn('Particles: failed to create WebGL renderer, skipping. Error:', err);
+      return;
+    }
     const gl = renderer.gl;
     container.appendChild(gl.canvas);
     gl.clearColor(0, 0, 0, 0);
