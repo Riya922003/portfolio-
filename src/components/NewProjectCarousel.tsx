@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { Lens } from '@/components/ui/lens'
 
 export type ProjectRecord = {
   id: number
@@ -58,7 +59,7 @@ export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: nu
         <div className="flex flex-row">
           {/* Left: image card */}
           <div className="w-[45%] p-6 flex items-center justify-center">
-            <div className="relative w-full h-[360px] rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900/10 shadow-lg">
+            <div className=" relative w-full h-[360px] rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900/10 shadow-lg">
               <Image
                 src={p.image && p.image.trim() !== '' ? p.image : '/assets/images/placeholder.png'}
                 alt={p.name}
@@ -66,6 +67,14 @@ export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: nu
                 className="object-cover"
                 unoptimized
               />
+              {/* Lens overlay sits absolutely on top of the image and uses the imageSrc to avoid wrapping Next/Image */}
+              <div className="absolute inset-0">
+                <Lens
+                  imageSrc={p.image && p.image.trim() !== '' ? p.image : '/assets/images/placeholder.png'}
+                  className="w-full h-full"
+                  showAlways={true}
+                />
+              </div>
 
               {/* Nav buttons removed (not needed) */}
             </div>
