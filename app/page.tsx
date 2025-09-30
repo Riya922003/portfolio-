@@ -306,7 +306,7 @@ const Home = () => {
 
 				{/* Bento grid - placed after projects section as requested */}
 				<section className="mt-12">
-					<h2 className="text-2xl font-semibold mb-4">Selected Highlights</h2>
+					<h2 className="text-2xl font-semibold mb-4">Github and Leetcode highlights</h2>
 					<BentoGridDemo />
 				</section>
 
