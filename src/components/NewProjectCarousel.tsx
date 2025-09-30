@@ -54,55 +54,53 @@ export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: nu
   return (
     <div className="w-full max-w-7xl mx-auto px-4">
       <div className="rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900/30 relative">
-        <div className="relative w-full" style={{ height: 360 }}>
-          <Image
-            src={p.image && p.image.trim() !== '' ? p.image : '/assets/images/placeholder.png'}
-            alt={p.name}
-            fill
-            className="object-cover"
-            unoptimized
-          />
-        </div>
+        {/* Two-column layout: image (45%) left, content (55%) right (no stacking) */}
+        <div className="flex flex-row">
+          {/* Left: image card */}
+          <div className="w-[45%] p-6 flex items-center justify-center">
+            <div className="relative w-full h-[360px] rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900/10 shadow-lg">
+              <Image
+                src={p.image && p.image.trim() !== '' ? p.image : '/assets/images/placeholder.png'}
+                alt={p.name}
+                fill
+                className="object-cover"
+                unoptimized
+              />
 
-        <div className="p-6">
-          <div className="flex flex-wrap gap-2 mb-4">
-            {(p.tech || []).slice(0, 6).map((t, i) => (
-              <span key={i} className="px-2 py-1 text-xs rounded-full bg-neutral-800 text-neutral-300">{t}</span>
-            ))}
+              {/* Nav buttons removed (not needed) */}
+            </div>
           </div>
 
-          <h3 className="text-2xl font-semibold mb-2">{p.name}</h3>
-          <p className="text-sm text-neutral-400 mb-6 line-clamp-3">{p.description}</p>
-
-          <div className="mt-4 relative">
-            <a href={p.link || '#'} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white hover:text-neutral-300">Open project →</a>
-
-            {/* Dots centered below card */}
-            <div className="mt-6 flex justify-center gap-3">
-              {projects.map((_, i) => (
-                <button
-                  key={i}
-                  aria-label={`Go to project ${i + 1}`}
-                  onClick={() => setIndex(i)}
-                  className={`h-3 w-3 rounded-full transition-colors ${i === index ? 'bg-white scale-110' : 'bg-neutral-600'}`}
-                />
+          {/* Right: content */}
+          <div className="w-[55%] p-6 flex flex-col justify-center">
+            <div className="flex flex-wrap gap-2 mb-4">
+              {(p.tech || []).slice(0, 6).map((t, i) => (
+                <span key={i} className="px-2 py-1 text-xs rounded-full bg-neutral-800 text-neutral-300">{t}</span>
               ))}
+            </div>
+
+            <h3 className="text-2xl font-semibold mb-2">{p.name}</h3>
+            <p className="text-sm text-neutral-400 mb-6 line-clamp-3">{p.description}</p>
+
+            <div className="mt-4 relative">
+              <a href={p.link || '#'} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white hover:text-neutral-300">Open project →</a>
+
+              {/* Dots centered below content on small screens, left-aligned on wide */}
+              <div className="mt-6 flex justify-start gap-3">
+                {projects.map((_, i) => (
+                  <button
+                    key={i}
+                    aria-label={`Go to project ${i + 1}`}
+                    onClick={() => setIndex(i)}
+                    className={`h-3 w-3 rounded-full transition-colors ${i === index ? 'bg-white scale-110' : 'bg-neutral-600'}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      
-        {/* Overlay nav buttons on left/right middle of image */}
-        <div className="absolute top-1/2 left-4 -translate-y-1/2">
-          <button onClick={prev} aria-label="Previous" className="p-3 rounded-md bg-black/40 hover:bg-black/60 border border-neutral-700">
-            <ArrowLeft className="text-white" />
-          </button>
-        </div>
 
-        <div className="absolute top-1/2 right-4 -translate-y-1/2">
-          <button onClick={next} aria-label="Next" className="p-3 rounded-md bg-black/40 hover:bg-black/60 border border-neutral-700">
-            <ArrowRight className="text-white" />
-          </button>
-        </div>
+        {/* Nav buttons moved inside the image card above */}
       </div>
     </div>
   )

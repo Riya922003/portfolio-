@@ -112,3 +112,37 @@
   .marquee-track, .animated-lines::before, .animated-lines::after { animation: none !important; }
 }
 
+/* Wobble card animation */
+@keyframes wobble {
+  0% { transform: translateY(0) rotate(0deg); }
+  15% { transform: translateY(-6px) rotate(-1deg); }
+  30% { transform: translateY(3px) rotate(1deg); }
+  45% { transform: translateY(-3px) rotate(-0.5deg); }
+  60% { transform: translateY(1px) rotate(0.5deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+.animate-wobble {
+  animation: wobble 3.2s ease-in-out infinite;
+}
+
+/* Prefer wobble only on hover: wrapper gets `wobble-on-hover`, inner element gets `wobble-inner` */
+.wobble-on-hover .wobble-inner { animation: none; }
+.wobble-on-hover:hover .wobble-inner { animation: wobble 3.2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wobble-on-hover .wobble-inner { animation: none !important; }
+}
+
+/* Support when the same element is both the wrapper and the inner (outer card wobble) */
+.wobble-on-hover.wobble-inner { animation: none; }
+.wobble-on-hover.wobble-inner:hover { animation: wobble 3.2s ease-in-out infinite; }
+
+/* JS fallback when toggling class on same element */
+.wobble-on-hover.wobble-inner.wobble-inner-animated { animation: wobble 3.2s ease-in-out infinite; }
+
+/* JS-driven class: apply wobble when JS toggles this class (used as a fallback/test) */
+.wobble-inner-animated {
+  animation: wobble 3.2s ease-in-out infinite;
+}
+

@@ -1,26 +1,19 @@
-// src/components/ContestRatings.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
+import { cn } from "@/lib/utils";
 
-// Define a type for the ratings object
-interface Ratings {
-  username?: string;
-  codeforces?: number;
-  codechef?: number;
-  leetcode?: number;
-  gfg?: number;
-  atcoder?: number;
+interface ContestRatingsProps {
+  className?: string;
 }
 
-const ContestRatings = () => {
-  const [ratings, setRatings] = useState<Ratings | null>(null);
+const ContestRatings = ({ className }: ContestRatingsProps) => {
+  const [rating, setRating] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Your specific API URL and Username
   const API_URL = 'https://contest-api-silk.vercel.app';
-  const USERNAME = 'Riya922003';
+  const USERNAME = 'riyagupta4079';
 
   useEffect(() => {
     const fetchRatings = async () => {
@@ -31,7 +24,13 @@ const ContestRatings = () => {
           throw new Error(errorData.error || 'Failed to fetch ratings');
         }
         const data = await response.json();
-        setRatings(data);
+        
+        if (data && data.leetcode && typeof data.leetcode.rating === 'number') {
+          setRating(data.leetcode.rating);
+        } else {
+          throw new Error('LeetCode rating not found in API response.');
+        }
+
       } catch (error: any) {
         console.error(error);
         setError(error.message);
@@ -41,29 +40,22 @@ const ContestRatings = () => {
     };
 
     fetchRatings();
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
 
   if (loading) {
-    return <div className="text-neutral-400">Loading contest ratings...</div>;
+    return <div className={cn("p-4 flex items-center justify-center text-neutral-400", className)}>Loading...</div>;
   }
 
   if (error) {
-    return <div className="text-red-500">Error: {error}</div>;
+    return <div className={cn("p-4 flex items-center justify-center text-red-500", className)}>Error: {error}</div>;
   }
 
   return (
-    <div className="p-6 rounded-lg border border-neutral-800 bg-neutral-900/50">
-      <h3 className="font-semibold text-xl mb-4">Competitive Programming Ratings</h3>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-        {ratings && Object.entries(ratings).map(([platform, rating]) =>
-          // Only display platforms with a valid rating, and ignore the username property
-          rating && typeof rating === 'number' && platform !== 'username' ? (
-            <div key={platform} className="p-4 bg-neutral-800 rounded-lg text-center">
-              <p className="text-sm capitalize text-neutral-400">{platform}</p>
-              <p className="font-bold text-2xl text-white mt-1">{rating}</p>
-            </div>
-          ) : null
-        )}
+    <div className={cn("p-4 rounded-lg border border-neutral-800 bg-neutral-900/50 flex flex-col", className)}>
+      <h3 className="font-semibold text-lg mb-2">LeetCode Contest Rating</h3>
+      <div className="p-3 bg-neutral-800 rounded-lg text-center flex-grow flex flex-col justify-center">
+        <p className="text-xs capitalize text-neutral-400">LeetCode</p>
+        <p className="font-bold text-3xl text-white mt-1">{rating}</p>
       </div>
     </div>
   );

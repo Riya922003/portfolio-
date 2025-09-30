@@ -17,8 +17,12 @@ import ContactModal from '@/components/ContactModal'
 import { Users } from 'lucide-react'
 import NewProjectCarousel from '@/components/NewProjectCarousel'
 import ContestRatings from '@/components/ContestRatings'
+import CursorFollow from '@/components/ui/cursor-follow'
+import { WobbleCard } from "@/components/ui/wobble-card";
+import WobbleCardDemo from '@/components/wobble-card-demo';
+import { useEffect } from 'react';
+import BentoGridDemo from '@/components/bento-grid-demo';
 
-import { useEffect } from 'react'
 
 const Home = () => {
 	useEffect(() => {
@@ -300,71 +304,13 @@ const Home = () => {
 					<NewProjectCarousel />
 				</section>
 
+				{/* Bento grid - placed after projects section as requested */}
+				<section className="mt-12">
+					<h2 className="text-2xl font-semibold mb-4">Selected Highlights</h2>
+					<BentoGridDemo />
+				</section>
 
-				{/* Coding Contributions Bento (empty placeholder 5-card grid) */}
-			<section className="mt-12">
-    <h2 className="text-2xl font-semibold mb-4">Coding Contributions</h2>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {/* Top-left small */}
-        <div className="p-4 rounded-lg border border-neutral-800 bg-neutral-900/50 backdrop-blur-sm overflow-hidden flex items-center justify-center text-center md:col-start-1 md:row-start-1 h-40">
-						<a href="https://github.com/Riya922003" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
-							<img
-								alt="GitHub stats for Riya922003"
-								src="https://github-readme-stats.vercel.app/api?username=Riya922003&show_icons=true&theme=dark&border_radius=10"
-								className="w-full h-full object-contain rounded-md"
-							/>
-						</a>
-        </div>
-
-        {/* Top-right large (spans cols 2-3) */}
-        <div className="p-6 rounded-lg border border-neutral-800 bg-neutral-900/50 backdrop-blur-sm overflow-hidden flex items-center justify-center text-center md:col-start-2 md:col-span-2 md:row-start-1 h-64">
-						<a href="https://github.com/Riya922003" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
-							<img
-								alt="GitHub activity graph for Riya922003"
-								src="https://github-readme-activity-graph.vercel.app/graph?username=Riya922003&theme=high-contrast&area=true&hide_border=true"
-								className="w-full h-full object-cover rounded-md"
-							/>
-						</a>
-        </div>
-
-        {/* Left tall (under Card 1) */}
-		<div className="p-6 rounded-lg border border-neutral-800 bg-neutral-900/50 backdrop-blur-sm overflow-hidden flex flex-col items-center justify-center text-center md:col-start-1 md:row-start-2 md:transform md:-translate-y-24 h-64">
-						<h3 className="text-base font-semibold text-neutral-100 mb-3">LeetCode Stats</h3>
-						<div className="w-full flex-1 flex items-center justify-center">
-							<a href="https://leetcode.com/u/riyagupta4079/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
-								<img
-									alt="LeetCode stats for riyagupta4079"
-									src="https://leetcode.card.workers.dev/riyagupta4079?theme=dark&font=urbanist&ext=heatmap"
-									className="w-full h-auto max-h-full object-contain rounded-md"
-								/>
-							</a>
-						</div>
-		</div>
-
-        {/* Bottom-middle small */}
-        <div className="p-4 rounded-lg border border-neutral-800 bg-neutral-900/50 backdrop-blur-sm overflow-hidden flex items-center justify-center text-center md:col-start-2 md:row-start-2 h-40">
-						<a href="https://github.com/Riya922003" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
-							<img
-								alt="GitHub streaks for Riya922003"
-								src="https://streak-stats.demolab.com/?user=Riya922003&account_private=true&theme=dark&border_radius=10"
-								className="w-full h-full object-contain rounded-md"
-							/>
-						</a>
-        </div>
-
-        {/* Bottom-right small */}
-        <div className="p-4 rounded-lg border border-neutral-800 bg-neutral-900/50 backdrop-blur-sm overflow-hidden flex items-center justify-center text-center md:col-start-3 md:row-start-2 h-40">
-						<a href="https://leetcode.com/u/riyagupta4079/" target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center">
-							<img
-								alt="LeetCode contests card"
-								src="https://leetcard.jacoblin.cool/riyagupta4079/contest?theme=dark"
-								className="w-full h-full object-contain rounded-md"
-							/>
-						</a>
-        </div>
-    </div>
-</section>
 			</div>
 		</main>
 	);
