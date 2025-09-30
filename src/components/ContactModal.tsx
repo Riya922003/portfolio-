@@ -44,12 +44,13 @@ const ContactModal: React.FC = () => {
         setTimeout(() => setOpen(false), 900)
       } else {
         setStatus('error')
-        setServerMsg(data?.message ?? 'Something went wrong')
+        // Prefer server-provided message, including error details in dev
+        setServerMsg(data?.message ?? data?.error ?? 'Something went wrong')
       }
     } catch (err) {
       console.error('Contact submit failed', err)
       setStatus('error')
-      setServerMsg('Network error — please try again')
+      setServerMsg((err as Error)?.message ?? 'Network error — please try again')
     }
   }
 
@@ -100,7 +101,13 @@ const ContactModal: React.FC = () => {
         </div>
 
         <DialogFooter>
-          <button onClick={handleSubmit} disabled={status === 'sending'} className="inline-flex items-center px-4 py-2 rounded-md bg-rose-500 text-white disabled:opacity-60">{status === 'sending' ? 'Sending...' : 'Send message'}</button>
+          <button
+            onClick={handleSubmit}
+            disabled={status === 'sending' || !email.trim() || !message.trim()}
+            className="inline-flex items-center px-4 py-2 rounded-md bg-rose-500 text-white disabled:opacity-60"
+          >
+            {status === 'sending' ? 'Sending...' : 'Send message'}
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

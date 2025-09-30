@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server'
 
-// Use Edge runtime so Response/NextResponse usage is valid
-export const runtime = 'edge'
-
 type Body = {
   email?: string
   message?: string
@@ -22,15 +19,19 @@ export async function POST(request: Request) {
   // errors when DATABASE_URL is missing in dev.
   try {
     if (!process.env.DATABASE_URL) {
-      console.warn('DATABASE_URL not set; skipping DB insert for contact POST')
-    } else {
-      const { db } = await import('@/db')
-      const { messages } = await import('@/db/schema')
-      const insertResult = await db.insert(messages).values({ email, message })
-      if (process.env.NODE_ENV !== 'production') console.log('contact insertResult:', insertResult)
+      // If the database isn't configured, return an error so the client knows
+      console.warn('DATABASE_URL not set; cannot save contact message')
+      return NextResponse.json({ message: 'Database not configured', error: 'DATABASE_URL not set' }, { status: 500 })
     }
+
+    // Import DB at request-time (avoids import-time failures when env is missing)
+    const { db } = await import('@/db')
+    const { messages } = await import('@/db/schema')
+    const insertResult = await db.insert(messages).values({ email, message })
+    if (process.env.NODE_ENV !== 'production') console.log('contact insertResult:', insertResult)
   } catch (dbErr) {
     console.error('Failed to save contact message to DB', dbErr)
+    return NextResponse.json({ message: 'Failed to save message', error: String(dbErr) }, { status: 500 })
   }
 
     // Existing email sending logic — attempt to send a notification email if configured
