@@ -27,7 +27,10 @@ import { useEffect } from 'react';
 import BentoGridDemo from '@/components/bento-grid-demo';
 import HyperspeedCard from '@/components/HyperspeedCard';
 import CircularText from '@/components/CircularText';
-
+import SplitText from "@/components/SplitText";
+const handleAnimationComplete = () => {
+  console.log('All letters have animated!');
+};
 
 const Home = () => {
 	useEffect(() => {
@@ -230,16 +233,21 @@ const Home = () => {
 										</div>
 									</div>
 								</div>
-                                
+                                <SplitText
+								  text="I'm driven by a passion for learning and applying the right tools to solve complex challenges."
+								  className="mt-12 text-2xl font-semibold text-center"
+								  delay={100}
+								  duration={0.6}
+								  ease="power3.out"
+								  splitType="chars"
+								  from={{ opacity: 0, y: 40 }}
+								  to={{ opacity: 1, y: 0 }}
+								  threshold={0.1}
+								  rootMargin="-100px"
+								  textAlign="center"
+								  onLetterAnimationComplete={handleAnimationComplete}
+								/>
 							</div>
-							{/* subtle animated person image in bottom-right as background */}
-							<Image
-								src="/assets/images/worker.gif"
-								alt="Person working on desktop"
-								width={640}
-								height={480}
-								className="absolute left-1/2 top-[34%] -translate-x-1/2 opacity-100 pointer-events-none z-0 object-contain w-64 h-48 md:w-80 md:h-64 lg:w-96 lg:h-72 max-w-none"
-							/>
 							<div className="mt-4 relative z-10">
 								<TechVisual />
 							</div>
@@ -383,6 +391,11 @@ const Home = () => {
 						className="mx-auto"
 						effectOptions={{
 							colors: {
+								roadColor: 0x080808,
+								islandColor: 0x0a0a0a,
+								background: 0x000000,
+								shoulderLines: 0x131318,
+								brokenLines: 0x131318,
 								leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
 								rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
 								sticks: 0x03b3c3
