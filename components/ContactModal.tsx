@@ -89,9 +89,9 @@ const ContactModal: React.FC = () => {
 
       <DialogContent className="sm:max-w-md bg-neutral-900 border-neutral-700 text-white">
         <DialogHeader className="text-left">
-          <DialogTitle className="text-xl font-semibold text-white">What's on your mind?</DialogTitle>
+          <DialogTitle className="text-xl font-semibold text-white">Get in Touch</DialogTitle>
           <DialogDescription className="text-neutral-400">
-            Leave a message and your contact info, and I'll get back to you.
+            I'd love to hear from you! Send me a message and I'll get back to you soon.
           </DialogDescription>
         </DialogHeader>
 
@@ -100,36 +100,48 @@ const ContactModal: React.FC = () => {
             <Label htmlFor="contact-email" className="text-sm font-medium text-neutral-200">
               Email
             </Label>
-            <Input
+            <input
               id="contact-email"
               type="email"
               placeholder="your.email@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={{
-                backgroundColor: 'rgba(38, 38, 38, 0.5)',
-                borderColor: 'rgb(82, 82, 82)',
-                color: 'white'
+                backgroundColor: '#262626cc',
+                border: '1px solid #525252',
+                color: '#ffffff',
+                borderRadius: '6px',
+                padding: '8px 12px',
+                width: '100%',
+                fontSize: '14px',
+                outline: 'none'
               }}
-              className="border placeholder:text-neutral-500 focus:border-neutral-500"
+              className="[&::placeholder]:text-neutral-400 [&:focus]:border-neutral-500"
             />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="contact-message" className="text-sm font-medium text-neutral-200">
               Message
             </Label>
-            <Textarea
+            <textarea
               id="contact-message"
               placeholder="Your message here..."
               rows={4}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               style={{
-                backgroundColor: 'rgba(38, 38, 38, 0.5)',
-                borderColor: 'rgb(82, 82, 82)',
-                color: 'white'
+                backgroundColor: '#262626cc',
+                border: '1px solid #525252',
+                color: '#ffffff',
+                borderRadius: '6px',
+                padding: '8px 12px',
+                width: '100%',
+                fontSize: '14px',
+                fontFamily: 'inherit',
+                resize: 'none',
+                outline: 'none'
               }}
-              className="border placeholder:text-neutral-500 resize-none focus:border-neutral-500"
+              className="[&::placeholder]:text-neutral-400 [&:focus]:border-neutral-500"
             />
           </div>
         </div>

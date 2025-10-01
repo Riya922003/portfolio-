@@ -64,7 +64,7 @@ export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: nu
                 src={p.image && p.image.trim() !== '' ? p.image : '/assets/images/placeholder.png'}
                 alt={p.name}
                 fill
-                className="object-cover"
+                className="object-fill"
                 unoptimized
               />
               {/* Lens overlay sits absolutely on top of the image and uses the imageSrc to avoid wrapping Next/Image */}

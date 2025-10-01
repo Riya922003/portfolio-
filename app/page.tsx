@@ -28,6 +28,7 @@ import BentoGridDemo from '@/components/bento-grid-demo';
 import HyperspeedCard from '@/components/HyperspeedCard';
 import CircularText from '@/components/CircularText';
 import SplitText from "@/components/SplitText";
+
 const handleAnimationComplete = () => {
   console.log('All letters have animated!');
 };
@@ -314,7 +315,7 @@ const Home = () => {
 
 								<div className="mt-4">
 									{/* Render ContactModal directly (moved out of ElectricBorder) to ensure the trigger is clickable */}
-									<ContactModal />
+									{ <ContactModal /> }
 								</div>
 							</div>
 						</div>
