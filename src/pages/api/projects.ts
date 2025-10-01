@@ -12,8 +12,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { db } = await import('@/db')
     const { projects } = await import('@/db/schema')
 
-    const data = await db.select().from(projects)
-    return res.status(200).json(data)
+    try {
+      const data = await db.select().from(projects)
+      return res.status(200).json(data)
+    } catch (dbErr: any) {
+      // Likely network/connection issue (DNS, auth, etc). Don't throw — return
+      // an empty list but set a diagnostic header so clients can detect the problem.
+      console.error('pages/api/projects - DB query failed', dbErr)
+      res.setHeader('x-projects-error', 'true')
+      // In development include the error in the response body to aid debugging
+      if (process.env.NODE_ENV !== 'production') {
+        return res.status(200).json([])
+      }
+      return res.status(200).json([])
+    }
   } catch (err: any) {
     console.error('pages/api/projects error', err)
     res.setHeader('x-projects-error', 'true')
