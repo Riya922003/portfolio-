@@ -15,8 +15,10 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
+import Magnet from '@/components/ui/Magnet'
 
 const ContactModal: React.FC = () => {
+  console.log('ContactModal rendering...');
   const [open, setOpen] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
   const [message, setMessage] = useState<string>('')
@@ -69,15 +71,19 @@ const ContactModal: React.FC = () => {
 
   return (
     <Dialog open={open} onOpenChange={(val) => setOpen(val)}>
-        <DialogTrigger asChild>
-        <button
-          type="button"
-          onClick={() => { console.log('ContactModal trigger clicked'); setOpen(true) }}
-          className={"mx-auto inline-block px-6 py-3 rounded-md border border-neutral-700 text-neutral-100 bg-gradient-to-br from-neutral-800/60 to-neutral-900/60 hover:from-rose-500 hover:to-cyan-500 transition-all"}
-        >
-          Let's Connect
-        </button>
-      </DialogTrigger>
+      <div className="mx-auto inline-block">
+        <Magnet>
+          <DialogTrigger asChild>
+            <button
+              type="button"
+              onClick={() => { console.log('ContactModal trigger clicked'); setOpen(true) }}
+              className={"inline-block px-6 py-3 rounded-md border border-neutral-700 text-black bg-gradient-to-br from-neutral-800/60 to-neutral-900/60 hover:from-rose-500 hover:to-cyan-500 transition-all"}
+            >
+              Let's Connect
+            </button>
+          </DialogTrigger>
+        </Magnet>
+      </div>
 
       {/* (debug UI removed) */}
 

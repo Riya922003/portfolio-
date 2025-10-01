@@ -26,6 +26,7 @@ import WobbleCardDemo from '@/components/wobble-card-demo';
 import { useEffect } from 'react';
 import BentoGridDemo from '@/components/bento-grid-demo';
 import HyperspeedCard from '@/components/HyperspeedCard';
+import CircularText from '@/components/CircularText';
 
 
 const Home = () => {
@@ -37,6 +38,14 @@ const Home = () => {
 		<main className="relative bg-black text-white min-h-screen flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
 			<div className="max-w-7xl w-full">
 				<section className="relative py-16 md:py-24">
+					{/* Circular Text - Right top corner */}
+					<div className="absolute top-4 right-0 z-20">
+						<CircularText
+							text="Build*Scale*Deliver*"
+							className="w-[20px] h-[20px] md:w-[180px] md:h-[180px] text-xs md:text-sm"
+/>
+					</div>
+					
 					{/* Ballpit background for hero */}
 					<div className="absolute inset-0 z-0">
 						{/* Ballpit background for hero — explicit height so canvas can size and we position canvas absolute to fill */}
