@@ -1,6 +1,9 @@
 "use client";
 
 import Image from 'next/image'
+import { FaReact, FaDocker, FaGitAlt, FaNodeJs, FaGithub, FaLinux } from 'react-icons/fa'
+import { SiTypescript, SiPostgresql, SiTailwindcss, SiFramer, SiSvelte, SiExpress, SiMongodb, SiPrisma, SiRedux, SiBun, SiVite, SiDrizzle, SiShadcnui } from 'react-icons/si'
+import { TbBrandNextjs } from 'react-icons/tb'
 import { Github, Linkedin, Server, ShieldCheck, Database, Zap, Code, Mail, Twitter, ChartBar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import dynamic from 'next/dynamic'
@@ -166,6 +169,8 @@ const Home = () => {
 					</div>
 				</section>
 
+			
+
 				{/* Highlights & Arsenal bento grid */}
 				<section className="mt-12">
 					<h2 className="text-2xl font-semibold mb-4">Highlights & Arsenal</h2>
@@ -308,6 +313,56 @@ const Home = () => {
 				<section className="mt-12">
 					<h2 className="text-2xl font-semibold mb-4">Github and Leetcode highlights</h2>
 					<BentoGridDemo />
+				</section>
+
+
+					{/* Skills section */}
+				<section className="py-20 flex flex-col items-center gap-4 relative">
+					<p className="text-xs tracking-[0.35em] text-neutral-400 uppercase"></p>
+					<h2 className="font-serif text-4xl md:text-5xl tracking-wide text-center leading-tight">
+						The Secret <span className="bg-clip-text text-transparent bg-gradient-to-r from-neutral-100 via-pink-400 to-rose-500">Sauce</span>
+					</h2>
+					{(() => {
+						const skills = [
+							{ name: 'React', icon: <FaReact /> },
+							{ name: 'Next.js', icon: <TbBrandNextjs /> },
+							{ name: 'TypeScript', icon: <SiTypescript /> },
+							{ name: 'Tailwind CSS', icon: <SiTailwindcss /> },
+							{ name: 'Framer Motion', icon: <SiFramer /> },
+							{ name: 'Svelte', icon: <SiSvelte /> },
+							{ name: 'Node.js', icon: <FaNodeJs /> },
+							{ name: 'Express', icon: <SiExpress /> },
+							{ name: 'PostgreSQL', icon: <SiPostgresql /> },
+							{ name: 'MongoDB', icon: <SiMongodb /> },
+							{ name: 'Prisma', icon: <SiPrisma /> },
+							{ name: 'Redux', icon: <SiRedux /> },
+							{ name: 'Drizzle ORM', icon: <SiDrizzle /> },
+							{ name: 'shadcn/ui', icon: <SiShadcnui /> },
+							{ name: 'Bun', icon: <SiBun /> },
+							{ name: 'Git', icon: <FaGitAlt /> },
+							{ name: 'GitHub', icon: <FaGithub /> },
+							{ name: 'Vite', icon: <SiVite /> },
+							{ name: 'Docker', icon: <FaDocker /> },
+							{ name: 'Linux', icon: <FaLinux /> },
+						];
+						return (
+							<div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-5xl">
+								{skills.map(s => (
+									<div
+										key={s.name}
+										title={s.name}
+										aria-label={s.name}
+										className="group relative w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-md border border-white/10 bg-white/[0.03] hover:border-white/30 hover:bg-white/[0.07] transition-colors backdrop-blur-sm shadow-[0_0_0_1px_rgba(255,255,255,0.05)]"
+									>
+										<div className="text-[26px] md:text-[30px] text-neutral-300 group-hover:text-white transition-colors drop-shadow-[0_0_6px_rgba(255,255,255,0.15)]">
+											{s.icon}
+										</div>
+										<span className="pointer-events-none absolute inset-0 rounded-md opacity-0 group-hover:opacity-100 transition-opacity bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.15),transparent_70%)]" />
+									</div>
+								))}
+							</div>
+						)
+					})()}
 				</section>
 
 
