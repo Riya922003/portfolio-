@@ -321,13 +321,11 @@ const Home = () => {
 					</div>
 				</section>
 
-
-				{/* Projects Carousel Section (archived) */}
 				<section className="mt-12">
+					<h2 className="text-2xl font-semibold mb-4">Highlights & Arsenal</h2>
 					<NewProjectCarousel />
 				</section>
 
-				{/* Bento grid - placed after projects section as requested */}
 				<section className="mt-12">
 					<h2 className="text-2xl font-semibold mb-4">Github and Leetcode highlights</h2>
 					<BentoGridDemo />

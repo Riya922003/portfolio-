@@ -87,48 +87,79 @@ const ContactModal: React.FC = () => {
 
       {/* (debug UI removed) */}
 
-      <DialogContent className="relative bg-neutral-900/95 rounded-lg border border-neutral-700 backdrop-blur-md p-6">
-        {/* Close button (top-right) */}
-        <DialogClose asChild>
-          <button aria-label="Close" onClick={() => setOpen(false)} className="absolute right-4 top-4 text-white bg-neutral-800/30 hover:bg-neutral-800/50 rounded-full p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 6l8 8M6 14L14 6" />
-            </svg>
-          </button>
-        </DialogClose>
+      <DialogContent className="sm:max-w-md bg-neutral-900 border-neutral-700 text-white">
+        <DialogHeader className="text-left">
+          <DialogTitle className="text-xl font-semibold text-white">What's on your mind?</DialogTitle>
+          <DialogDescription className="text-neutral-400">
+            Leave a message and your contact info, and I'll get back to you.
+          </DialogDescription>
+        </DialogHeader>
 
-        <div className="text-white">
-          <DialogHeader>
-            <DialogTitle className="text-white">What's on your mind?</DialogTitle>
-            <DialogDescription className="text-neutral-300">Leave a message and your contact info, and I'll get back to you.</DialogDescription>
-          </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid gap-2">
+            <Label htmlFor="contact-email" className="text-sm font-medium text-neutral-200">
+              Email
+            </Label>
+            <Input
+              id="contact-email"
+              type="email"
+              placeholder="your.email@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{
+                backgroundColor: 'rgba(38, 38, 38, 0.5)',
+                borderColor: 'rgb(82, 82, 82)',
+                color: 'white'
+              }}
+              className="border placeholder:text-neutral-500 focus:border-neutral-500"
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="contact-message" className="text-sm font-medium text-neutral-200">
+              Message
+            </Label>
+            <Textarea
+              id="contact-message"
+              placeholder="Your message here..."
+              rows={4}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              style={{
+                backgroundColor: 'rgba(38, 38, 38, 0.5)',
+                borderColor: 'rgb(82, 82, 82)',
+                color: 'white'
+              }}
+              className="border placeholder:text-neutral-500 resize-none focus:border-neutral-500"
+            />
+          </div>
         </div>
 
-        <div className="mt-4 space-y-4 text-white">
-          {status === 'success' && <div className="text-sm text-green-500">{serverMsg ?? "Thanks! I'll get back to you soon."}</div>}
-          {status === 'error' && <div className="text-sm text-red-500 space-y-1">
-            <div>{serverMsg ?? 'Something went wrong. Please try again later.'}</div>
-            {debugInfo && <pre className="text-[10px] text-neutral-400 whitespace-pre-wrap">{debugInfo}</pre>}
-          </div>}
-
-          <div>
-            <Label className="text-white" htmlFor="contact-email">Email</Label>
-            <Input id="contact-email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+        {serverMsg && (
+          <div className={`text-sm p-3 rounded-md ${
+            status === 'success' 
+              ? 'bg-green-900/50 text-green-300 border border-green-700' 
+              : 'bg-red-900/50 text-red-300 border border-red-700'
+          }`}>
+            {serverMsg}
           </div>
+        )}
 
-          <div>
-            <Label className="text-white" htmlFor="contact-message">Message</Label>
-            <Textarea id="contact-message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell me about your project or challenge" />
-          </div>
-        </div>
-
-        <DialogFooter>
+        <DialogFooter className="gap-2">
+          <DialogClose asChild>
+            <button
+              type="button"
+              className="px-4 py-2 text-sm text-neutral-400 hover:text-white transition-colors"
+            >
+              Cancel
+            </button>
+          </DialogClose>
           <button
+            type="button"
             onClick={handleSubmit}
-            disabled={status === 'sending' || !email.trim() || message.trim().length < 3}
-            className="inline-flex items-center px-4 py-2 rounded-md bg-rose-500 text-white disabled:opacity-60"
+            disabled={status === 'sending' || !email.trim() || !message.trim()}
+            className="px-6 py-2 text-sm bg-gradient-to-r from-rose-500 to-cyan-500 text-white rounded-md hover:from-rose-600 hover:to-cyan-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
-            {status === 'sending' ? 'Sending...' : 'Send message'}
+            {status === 'sending' ? 'Sending...' : 'Send Message'}
           </button>
         </DialogFooter>
       </DialogContent>

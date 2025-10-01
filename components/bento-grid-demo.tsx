@@ -37,8 +37,8 @@ const Skeleton = () => (
 );
 const items = [
   {
-    title: "The Dawn of Innovation",
-    description: "Explore the birth of groundbreaking ideas and inventions.",
+    title: "Github Statstics",
+    description: "An overview of my code contributions, stars, and pull requests on GitHub.",
     header: (
       <div className="h-40 w-full overflow-hidden rounded-md">
         <Image
@@ -54,8 +54,8 @@ const items = [
     icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Digital Revolution",
-    description: "Dive into the transformative power of technology.",
+    title: "LeetCode Profile",
+    description: "A summary of my problem-solving progress, including total problems solved by difficulty.",
     header: (
       <div className="h-40 w-full overflow-hidden rounded-md">
         <Image
@@ -71,8 +71,8 @@ const items = [
     icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Art of Design",
-    description: "Discover the beauty of thoughtful and functional design.",
+    title: "Contribution Streak",
+    description: "A testament to my daily commitment and consistency in coding.",
     header: (
       <div className="h-40 w-full overflow-hidden rounded-md">
         
@@ -89,9 +89,8 @@ const items = [
     icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "The Power of Communication",
-    description:
-      "Understand the impact of effective communication in our lives.",
+    title: "Contribution Graph",
+    description:"A visual representation of my coding activity and contributions over the past year.",
     header: (
       <div className="h-40 w-full overflow-hidden rounded-md">
         <Image
