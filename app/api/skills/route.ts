@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 
-// Use Edge runtime for these routes so NextResponse is supported
 export const runtime = 'edge'
 
 export async function GET() {

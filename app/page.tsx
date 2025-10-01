@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { FaReact, FaDocker, FaGitAlt, FaNodeJs, FaGithub, FaLinux } from 'react-icons/fa'
-import { SiTypescript, SiPostgresql, SiTailwindcss, SiFramer, SiSvelte, SiExpress, SiMongodb, SiPrisma, SiRedux, SiBun, SiVite, SiDrizzle, SiShadcnui } from 'react-icons/si'
+import { SiTypescript, SiPostgresql, SiTailwindcss, SiFramer, SiSvelte, SiExpress, SiMongodb, SiPrisma, SiRedux, SiBun, SiVite, SiDrizzle, SiShadcnui, SiNetlify, SiFigma, SiSass, SiBootstrap, SiGit, SiAmazon, SiVercel, SiHeroku } from 'react-icons/si'
 import { TbBrandNextjs } from 'react-icons/tb'
 import { Github, Linkedin, Server, ShieldCheck, Database, Zap, Code, Mail, Twitter, ChartBar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -25,6 +25,7 @@ import { WobbleCard } from "@/components/ui/wobble-card";
 import WobbleCardDemo from '@/components/wobble-card-demo';
 import { useEffect } from 'react';
 import BentoGridDemo from '@/components/bento-grid-demo';
+import HyperspeedCard from '@/components/HyperspeedCard';
 
 
 const Home = () => {
@@ -33,7 +34,7 @@ const Home = () => {
 	}, [])
 
 	return (
-		<main className="relative bg-black-100 text-white min-h-screen flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
+		<main className="relative bg-black text-white min-h-screen flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
 			<div className="max-w-7xl w-full">
 				<section className="relative py-16 md:py-24">
 					{/* Ballpit background for hero */}
@@ -325,25 +326,25 @@ const Home = () => {
 					{(() => {
 						const skills = [
 							{ name: 'React', icon: <FaReact /> },
-							{ name: 'Next.js', icon: <TbBrandNextjs /> },
+							{ name: 'Netlify', icon: <SiNetlify /> },
 							{ name: 'TypeScript', icon: <SiTypescript /> },
-							{ name: 'Tailwind CSS', icon: <SiTailwindcss /> },
-							{ name: 'Framer Motion', icon: <SiFramer /> },
-							{ name: 'Svelte', icon: <SiSvelte /> },
+							{ name: 'SSH/Terminal', icon: <FaLinux /> },
+							{ name: 'Framer', icon: <SiFramer /> },
+							{ name: 'Sass', icon: <SiSass /> },
+							{ name: 'Figma', icon: <SiFigma /> },
 							{ name: 'Node.js', icon: <FaNodeJs /> },
-							{ name: 'Express', icon: <SiExpress /> },
-							{ name: 'PostgreSQL', icon: <SiPostgresql /> },
-							{ name: 'MongoDB', icon: <SiMongodb /> },
-							{ name: 'Prisma', icon: <SiPrisma /> },
-							{ name: 'Redux', icon: <SiRedux /> },
-							{ name: 'Drizzle ORM', icon: <SiDrizzle /> },
-							{ name: 'shadcn/ui', icon: <SiShadcnui /> },
-							{ name: 'Bun', icon: <SiBun /> },
+							{ name: 'VS Code', icon: <Code /> },
 							{ name: 'Git', icon: <FaGitAlt /> },
 							{ name: 'GitHub', icon: <FaGithub /> },
-							{ name: 'Vite', icon: <SiVite /> },
+							{ name: 'Prisma', icon: <SiPrisma /> },
 							{ name: 'Docker', icon: <FaDocker /> },
-							{ name: 'Linux', icon: <FaLinux /> },
+							{ name: 'Next.js', icon: <TbBrandNextjs /> },
+							{ name: 'Bootstrap', icon: <SiBootstrap /> },
+							{ name: 'Express', icon: <SiExpress /> },
+							{ name: 'Vercel', icon: <SiVercel /> },
+							{ name: 'MongoDB', icon: <SiMongodb /> },
+							{ name: 'Heroku', icon: <SiHeroku /> },
+							{ name: 'AWS', icon: <SiAmazon /> },
 						];
 						return (
 							<div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-5xl">
@@ -363,6 +364,22 @@ const Home = () => {
 							</div>
 						)
 					})()}
+				</section>
+
+				{/* Hyperspeed Card Section */}
+				<section className="mt-8 mb-16">
+					<HyperspeedCard 
+						title="Let's Make It Happen!"
+						description="I'm available for full-time roles & freelance projects. I thrive on crafting dynamic web applications and delivering seamless user experience"
+						className="mx-auto"
+						effectOptions={{
+							colors: {
+								leftCars: [0xd856bf, 0x6750a2, 0xc247ac],
+								rightCars: [0x03b3c3, 0x0e5ea5, 0x324555],
+								sticks: 0x03b3c3
+							}
+						}}
+					/>
 				</section>
 
 
