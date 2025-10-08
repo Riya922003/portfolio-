@@ -195,7 +195,7 @@ const Home = () => {
 							</div>
 
 							<div>
-								<PixelCard variant="pink" className="inline-block" gap={4} speed={40} noFocus={true}>
+								<PixelCard variant="pink" className="inline-block" gap={4} speed={40} colors="#fecdd3,#fda4af,#e11d48" noFocus={true}>
 									<div style={{position: 'relative', padding: 2}}>
 										<a href="mailto:riya@example.com" className="inline-block px-6 py-3 rounded-md text-neutral-100">Send a message</a>
 									</div>
