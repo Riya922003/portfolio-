@@ -23,20 +23,42 @@ import ContestRatings from '@/components/ContestRatings'
 import CursorFollow from '@/components/ui/cursor-follow'
 import { WobbleCard } from "@/components/ui/wobble-card";
 import WobbleCardDemo from '@/components/wobble-card-demo';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import BentoGridDemo from '@/components/bento-grid-demo';
 import HyperspeedCard from '@/components/HyperspeedCard';
 import CircularText from '@/components/CircularText';
 import SplitText from "@/components/SplitText";
+import Loader from '@/components/Loader';
 
 const handleAnimationComplete = () => {
   console.log('All letters have animated!');
 };
 
 const Home = () => {
-	useEffect(() => {
-		// client mount hook (no debug logs)
-	}, [])
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        // Auto-skip to main page after 8 seconds if no interaction
+        const autoSkipTimer = setTimeout(() => {
+            setIsLoading(false);
+            document.body.style.cursor = 'default';
+            window.scrollTo(0, 0);
+        }, 8000);
+
+        return () => clearTimeout(autoSkipTimer);
+    }, []);
+
+    // Function to manually skip the loader (can be called from Loader component)
+    const skipLoader = () => {
+        setIsLoading(false);
+        document.body.style.cursor = 'default';
+        window.scrollTo(0, 0);
+    };
+
+	// Show loader while loading
+	if (isLoading) {
+		return <Loader onComplete={skipLoader} />;
+	}
 
 	return (
 		<main className="relative bg-black text-white min-h-screen flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
@@ -173,7 +195,7 @@ const Home = () => {
 							</div>
 
 							<div>
-								<PixelCard variant="blue" className="inline-block" gap={4} speed={40} colors="#7df9ff,#60a5fa" noFocus={true}>
+								<PixelCard variant="pink" className="inline-block" gap={4} speed={40} noFocus={true}>
 									<div style={{position: 'relative', padding: 2}}>
 										<a href="mailto:riya@example.com" className="inline-block px-6 py-3 rounded-md text-neutral-100">Send a message</a>
 									</div>
@@ -315,7 +337,7 @@ const Home = () => {
 
 								<div className="mt-4">
 									{/* Render ContactModal directly (moved out of ElectricBorder) to ensure the trigger is clickable */}
-									{ <ContactModal /> }
+									<ContactModal />
 								</div>
 							</div>
 						</div>
@@ -409,5 +431,4 @@ const Home = () => {
 	);
 };
 export default Home;
-
 
