@@ -20,6 +20,8 @@ import ContactModal from '@/components/ContactModal'
 import { Users } from 'lucide-react'
 import NewProjectCarousel from '@/components/NewProjectCarousel'
 import ContestRatings from '@/components/ContestRatings'
+import Contributions from '@/components/Contributions'
+import AutoSlideshow from '@/components/AutoSlideshow'
 import CursorFollow from '@/components/ui/cursor-follow'
 import { WobbleCard } from "@/components/ui/wobble-card";
 import WobbleCardDemo from '@/components/wobble-card-demo';
@@ -29,6 +31,7 @@ import HyperspeedCard from '@/components/HyperspeedCard';
 import CircularText from '@/components/CircularText';
 import SplitText from "@/components/SplitText";
 import Loader from '@/components/Loader';
+import BackToTop from '@/components/BackToTop'
 
 const handleAnimationComplete = () => {
   console.log('All letters have animated!');
@@ -211,7 +214,7 @@ const Home = () => {
 				<section className="mt-12">
 					<h2 className="text-2xl font-semibold mb-4">Highlights & Arsenal</h2>
 
-					<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 auto-rows-[220px] gap-4">
+										<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 auto-rows-[220px] gap-4">
 						{/* Card base style: p-4 rounded-lg border border-neutral-800 bg-neutral-900/50 backdrop-blur-sm overflow-hidden */}
 
 						{/* Card A: Collaboration (Large top-left) */}
@@ -344,16 +347,22 @@ const Home = () => {
 					</div>
 				</section>
 
-				<section className="mt-12">
-					<h2 className="text-2xl font-semibold mb-4">Highlights & Arsenal</h2>
-					<NewProjectCarousel />
-				</section>
+								<section className="mt-12">
+										<h2 className="text-2xl font-semibold mb-4">Featured Projects</h2>
+										<AutoSlideshow interval={4500}>
+											<NewProjectCarousel />
+										</AutoSlideshow>
+								</section>
+
+				
 
 				<section className="mt-12">
 					<h2 className="text-2xl font-semibold mb-4">Github and Leetcode highlights</h2>
 					<BentoGridDemo />
 				</section>
 
+				{/* Contributions section showing PRs authored by the user */}
+				<Contributions />
 
 					{/* Skills section */}
 				<section className="py-20 flex flex-col items-center gap-4 relative">
@@ -427,6 +436,7 @@ const Home = () => {
 
 
 			</div>
+			<BackToTop />
 		</main>
 	);
 };
