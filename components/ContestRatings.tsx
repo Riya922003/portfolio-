@@ -12,35 +12,76 @@ const ContestRatings = ({ className }: ContestRatingsProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const API_URL = 'https://contest-api-silk.vercel.app';
-  const USERNAME = 'riyagupta4079';
+  const PROXY_URL = '/api/contest-ratings'
+  const USERNAME = 'riyagupta4079'
 
   useEffect(() => {
+    const controller = new AbortController()
+    // provide a reason when aborting so the thrown AbortError is clearer in stacks
+    const timeout = setTimeout(() => controller.abort('timeout'), 8000)
+
     const fetchRatings = async () => {
+      setLoading(true)
+      setError(null)
       try {
-        const response = await fetch(`${API_URL}/ratings?username=${USERNAME}`);
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to fetch ratings');
+        const resp = await fetch(`${PROXY_URL}?username=${encodeURIComponent(USERNAME)}`, { signal: controller.signal })
+        if (!resp.ok) {
+          const json = await resp.json().catch(() => ({}))
+          throw new Error(json?.error || `Status ${resp.status}`)
         }
-        const data = await response.json();
-        
+
+        const data = await resp.json()
         if (data && data.leetcode && typeof data.leetcode.rating === 'number') {
-          setRating(data.leetcode.rating);
+          setRating(data.leetcode.rating)
         } else {
-          throw new Error('LeetCode rating not found in API response.');
+          throw new Error('LeetCode rating not found in API response.')
         }
+      } catch (err: any) {
+        // Abort is expected on timeout/unmount — handle quietly.
+        // Some runtimes may produce slightly different shapes/messages for aborts,
+        // so detect aborts defensively.
+        const isAbort = !!err && (
+          err.name === 'AbortError' ||
+          (typeof err.message === 'string' && err.message.toLowerCase().includes('abort')) ||
+          err.constructor?.name === 'DOMException'
+        )
 
-      } catch (error: any) {
-        console.error(error);
-        setError(error.message);
+        if (isAbort) {
+          console.warn('ContestRatings fetch aborted/timed out')
+          setError('Request timed out')
+        } else {
+          console.error('ContestRatings fetch error:', err)
+          setError(err?.message || 'Failed to fetch ratings')
+        }
       } finally {
-        setLoading(false);
+        setLoading(false)
+        clearTimeout(timeout)
       }
-    };
+    }
 
-    fetchRatings();
-  }, []);
+    fetchRatings()
+
+    return () => {
+      clearTimeout(timeout)
+      // ensure any in-flight request is aborted when unmounting; pass a reason
+      try { controller.abort('unmount') } catch (e) { /* ignore */ }
+    }
+  }, [])
+
+  const onRetry = async () => {
+    setError(null);
+    setLoading(true);
+    try {
+      const resp = await fetch(`${PROXY_URL}?username=${encodeURIComponent(USERNAME)}`);
+      if (!resp.ok) throw new Error('Retry failed');
+      const data = await resp.json();
+      if (data && data.leetcode && typeof data.leetcode.rating === 'number') setRating(data.leetcode.rating);
+    } catch (e: any) {
+      setError(e?.message || 'Retry failed');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   if (loading) {
     return <div className={cn("p-4 flex items-center justify-center text-neutral-400", className)}>Loading...</div>;

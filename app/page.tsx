@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { FaReact, FaDocker, FaGitAlt, FaNodeJs, FaGithub, FaLinux } from 'react-icons/fa'
 import { SiTypescript, SiPostgresql, SiTailwindcss, SiFramer, SiSvelte, SiExpress, SiMongodb, SiPrisma, SiRedux, SiBun, SiVite, SiDrizzle, SiShadcnui, SiNetlify, SiFigma, SiSass, SiBootstrap, SiGit, SiAmazon, SiVercel, SiHeroku } from 'react-icons/si'
 import { TbBrandNextjs } from 'react-icons/tb'
-import { Github, Linkedin, Server, ShieldCheck, Database, Zap, Code, Mail, Twitter, ChartBar } from 'lucide-react'
+import { Github, Linkedin, Server, ShieldCheck, Database, Zap, Code, Mail, Twitter, ChartBar, TrendingUp, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import dynamic from 'next/dynamic'
 const Globe = dynamic(() => import('@/components/Globe'), { ssr: false })
@@ -21,6 +21,9 @@ import { Users } from 'lucide-react'
 import NewProjectCarousel from '@/components/NewProjectCarousel'
 import ContestRatings from '@/components/ContestRatings'
 import Contributions from '@/components/Contributions'
+import KpiCard from '@/components/dashboard/KpiCard'
+import PerformancePanel from '@/components/dashboard/PerformancePanel'
+// Chart components removed — KPI cards will render without charts
 import AutoSlideshow from '@/components/AutoSlideshow'
 import CursorFollow from '@/components/ui/cursor-follow'
 import { WobbleCard } from "@/components/ui/wobble-card";
@@ -363,6 +366,20 @@ const Home = () => {
 
 				{/* Contributions section showing PRs authored by the user */}
 				<Contributions />
+
+				{/* KPI cards removed here (moved into PerformancePanel) */}
+
+				{/* Performance panel (embedded on homepage) */}
+				<section className="mt-6 mb-6">
+					<div className="mx-auto max-w-7xl">
+						<div className="flex items-center justify-between mb-4">
+							<h2 className="text-lg font-semibold text-white">Performance & Visitors</h2>
+						</div>
+						<div className="rounded-xl border border-white/6 p-2 bg-transparent">
+							<PerformancePanel />
+						</div>
+					</div>
+				</section>
 
 					{/* Skills section */}
 				<section className="py-20 flex flex-col items-center gap-4 relative">

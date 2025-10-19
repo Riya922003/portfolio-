@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Footer from '@/src/components/Footer';
+import VitalsProvider from './VitalsProvider';
 
 import "./globals.css";
 
@@ -25,8 +26,10 @@ export default function RootLayout({
             <link rel="stylesheet" href="/tailwind.css" />
         </head>
         <body className={`${inter.className} bg-black`}>
-        {children}
-        <Footer />
+        <VitalsProvider>
+          {children}
+          <Footer />
+        </VitalsProvider>
         </body>
         </html>
     );

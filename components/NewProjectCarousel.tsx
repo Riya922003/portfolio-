@@ -12,6 +12,8 @@ export type ProjectRecord = {
   tech: string[]
   link: string
   image?: string
+  // optional demo video URL (mp4 or hosted video)
+  demoUrl?: string
 }
 
 export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: number }) {
@@ -45,6 +47,20 @@ export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: nu
 
   const prev = () => setIndex((i) => (i - 1 + projects.length) % projects.length)
   const next = () => setIndex((i) => (i + 1) % projects.length)
+  const [showDemo, setShowDemo] = useState(false)
+  const [demoSrc, setDemoSrc] = useState<string | undefined>(undefined)
+
+  // Close on Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowDemo(false)
+        setDemoSrc(undefined)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   if (loading) return <div className="p-6 rounded-lg border border-neutral-800 bg-neutral-900/40">Loading projects...</div>
   if (error) return <div className="p-6 rounded-lg border border-red-600 bg-red-900/10 text-red-300">Error loading projects: {error}</div>
@@ -53,6 +69,7 @@ export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: nu
   const p = projects[index]
 
   return (
+    <>
     <div className="w-full max-w-7xl mx-auto px-4">
       <div className="rounded-lg overflow-hidden border border-neutral-800 bg-neutral-900/30 relative">
         {/* Two-column layout: image (45%) left, content (55%) right (no stacking) */}
@@ -91,8 +108,27 @@ export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: nu
             <h3 className="text-2xl font-semibold mb-2">{p.name}</h3>
             <p className="text-sm text-neutral-400 mb-6 line-clamp-3">{p.description}</p>
 
-            <div className="mt-4 relative">
+            <div className="mt-4 relative flex items-center gap-6">
               <a href={p.link || '#'} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white hover:text-neutral-300">Open project →</a>
+
+              {/* Open live demo button (shows overlay video) */}
+              {p.demoUrl ? (
+                <button
+                  onClick={() => { setDemoSrc(p.demoUrl); setShowDemo(true) }}
+                  className="text-sm font-semibold text-cyan-300 hover:text-cyan-100"
+                  aria-label={`Open live demo for ${p.name}`}
+                >
+                  Open live demo →
+                </button>
+              ) : (
+                <button
+                  onClick={() => alert('No live demo available for this project')}
+                  className="text-sm font-semibold text-neutral-500 cursor-not-allowed"
+                  aria-hidden
+                >
+                  Open live demo →
+                </button>
+              )}
 
               {/* Dots centered below content on small screens, left-aligned on wide */}
               <div className="mt-6 flex justify-start gap-3">
@@ -112,5 +148,28 @@ export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: nu
         {/* Nav buttons moved inside the image card above */}
       </div>
     </div>
+
+    {/* Demo overlay modal */}
+    {showDemo && demoSrc && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-6">
+        <div className="relative w-full max-w-4xl h-[60vh] bg-neutral-900 rounded-md overflow-hidden">
+          <button
+            onClick={() => { setShowDemo(false); setDemoSrc(undefined) }}
+            className="absolute top-3 right-3 z-10 text-white bg-neutral-800/60 px-3 py-1 rounded"
+            aria-label="Close demo"
+          >
+            Close
+          </button>
+
+          <video
+            src={demoSrc}
+            controls
+            autoPlay
+            className="w-full h-full object-contain bg-black"
+          />
+        </div>
+      </div>
+    )}
+    </>
   )
 }
