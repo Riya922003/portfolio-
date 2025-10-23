@@ -112,23 +112,56 @@ export default function NewProjectCarousel({ baseWidth = 720 }: { baseWidth?: nu
               <a href={p.link || '#'} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-white hover:text-neutral-300">Open project →</a>
 
               {/* Open live demo button (shows overlay video) */}
-              {p.demoUrl ? (
-                <button
-                  onClick={() => { setDemoSrc(p.demoUrl); setShowDemo(true) }}
-                  className="text-sm font-semibold text-cyan-300 hover:text-cyan-100"
-                  aria-label={`Open live demo for ${p.name}`}
-                >
-                  Open live demo →
-                </button>
-              ) : (
-                <button
-                  onClick={() => alert('No live demo available for this project')}
-                  className="text-sm font-semibold text-neutral-500 cursor-not-allowed"
-                  aria-hidden
-                >
-                  Open live demo →
-                </button>
-              )}
+              {/* Try demoUrl first; if missing, try to locate a matching mp4 in /assets/video by using the image filename (basename) */}
+              <button
+                onClick={() => {
+                  // prefer explicit demoUrl from the project record
+                  if (p.demoUrl && p.demoUrl.trim() !== '') {
+                    setDemoSrc(p.demoUrl)
+                    setShowDemo(true)
+                    return
+                  }
+
+                  // fallback: if image path present, derive video path from its basename
+                  try {
+                    const img = p.image || ''
+                    // extract filename without extension, e.g. '/assets/images/keynotes.png' -> 'keynotes'
+                    const parts = img.split('/')
+                    const file = parts.length ? parts[parts.length - 1] : ''
+                    const basename = file.split('.').slice(0, -1).join('.') || file
+
+                      if (basename) {
+                        const candidate = `/assets/video/${basename}.mp4`
+                        try {
+                          // verify the file exists before opening the modal
+                          fetch(candidate, { method: 'HEAD' }).then((resp) => {
+                            if (resp.ok) {
+                              setDemoSrc(candidate)
+                              setShowDemo(true)
+                            } else {
+                              alert('No live demo available for this project')
+                            }
+                          }).catch(() => {
+                            alert('No live demo available for this project')
+                          })
+                        } catch (e) {
+                          // fallback: set it and let browser handle errors
+                          setDemoSrc(candidate)
+                          setShowDemo(true)
+                        }
+                        return
+                      }
+                  } catch (e) {
+                    // ignore and fall through to alert
+                  }
+
+                  alert('No live demo available for this project')
+                }}
+                className={`text-sm font-semibold ${p.demoUrl ? 'text-cyan-300 hover:text-cyan-100' : 'text-neutral-300 hover:text-neutral-200'}`}
+                aria-label={`Open live demo for ${p.name}`}
+              >
+                Open live demo →
+              </button>
 
               {/* Dots centered below content on small screens, left-aligned on wide */}
               <div className="mt-6 flex justify-start gap-3">
