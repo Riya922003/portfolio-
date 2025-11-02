@@ -139,7 +139,7 @@ const Home = () => {
 
 						{/* Middle column - big centered name + framed image */}
 						<div className="order-2 md:order-2 flex flex-col items-center">
-							<h1 className="text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 text-center">Riya Gupta</h1>
+							<h1 className="text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 text-center">Hey! Folks</h1>
 
 							<div className="relative mt-2">
 								{/* outer decorative frame replaced with ElectricBorder for consistent effect */}
@@ -185,7 +185,7 @@ const Home = () => {
 						{/* Right column - description & social */}
 						<div className="order-1 md:order-3">
 							<h2 className="text-2xl md:text-3xl font-semibold text-white mb-3">Turning Logic into Launch</h2>
-							<p className="text-lg text-neutral-300 mb-4">I engineer high-performance backend systems built for scale and reliability. From crafting secure APIs and resilient databases to automating deployments, I build the robust foundations that power modern applications and handle real-world traffic with ease.</p>
+							<p className="text-lg text-neutral-300 mb-4">I design and implement high-performance backend systems to scale and be reliable. From crafting secure APIs and resilient databases to automating deployments, I'll build the robust foundations that power modern applications and handle real-world traffic with ease.</p>
 
 
 							<div className="flex items-center gap-4 mb-6">
@@ -233,7 +233,7 @@ const Home = () => {
 								</div>
 								<div>
 									<h4 className="font-semibold text-lg text-black">Collaboration</h4>
-									<p className="text-sm text-black mt-2">I believe the best products are built by teams, not individuals. I thrive in environments that value clear communication, iterative feedback, and a shared passion for quality.</p>
+									<p className="text-sm text-black mt-2">I believe the best products are built by teams, not individuals. I work best in an environment that appreciates clear communication, iterative feedback, and passion for quality across the board. Let's Make It Happen!</p>
 									<div className="mt-6 flex gap-3" role="list">
 										<span className="px-3 py-1 bg-neutral-800/30 rounded text-xs">Client-first</span>
 										<span className="px-3 py-1 bg-neutral-800/30 rounded text-xs">Transparent</span>

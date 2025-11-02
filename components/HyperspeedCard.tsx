@@ -1383,7 +1383,7 @@ const HyperspeedCard: FC<HyperspeedCardProps> = ({
             <Input
               id="email"
               type="email"
-              placeholder="your.email@example.com"
+              placeholder="Please enter your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="bg-neutral-800/50 border-neutral-600 text-white placeholder:text-neutral-500"
@@ -1395,7 +1395,7 @@ const HyperspeedCard: FC<HyperspeedCardProps> = ({
             </Label>
             <Textarea
               id="message"
-              placeholder="Your message here..."
+              placeholder="Please write your message"
               rows={4}
               value={message}
               onChange={(e) => setMessage(e.target.value)}

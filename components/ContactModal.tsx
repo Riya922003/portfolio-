@@ -77,7 +77,7 @@ const ContactModal: React.FC = () => {
             <Input
               id="contact-email"
               type="email"
-              placeholder="your.email@example.com"
+              placeholder="Please enter your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="bg-neutral-800 border-neutral-700 text-white placeholder:text-neutral-500 focus:border-neutral-500"
@@ -89,7 +89,7 @@ const ContactModal: React.FC = () => {
             </Label>
             <Textarea
               id="contact-message"
-              placeholder="Your message here..."
+              placeholder="Please write your message"
               rows={4}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
