@@ -8,7 +8,7 @@ type Props = {
 }
 
 // Legacy AutoSlideshow removed: keep harmless stub to avoid breaking imports
-export default function AutoSlideshow() {
+export default function AutoSlideshow({ children, interval = 5000 }: Props) {
   const wrapRef = useRef<HTMLDivElement | null>(null)
   const [count, setCount] = useState(0)
   const timerRef = useRef<number | null>(null)

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { desc } from 'drizzle-orm'
 
 // Use node runtime for DB writes
 export const runtime = 'nodejs'
@@ -60,7 +61,7 @@ export async function GET() {
 
     const { db } = await import('@/db')
     const { feedbacks } = await import('@/db/schema')
-    const rows = await db.select().from(feedbacks).orderBy(feedbacks.createdAt, 'desc').limit(12)
+    const rows = await db.select().from(feedbacks).orderBy(desc(feedbacks.createdAt)).limit(12)
     // normalize createdAt to ISO
     const normalized = rows.map((r: any) => ({ id: r.id, name: r.name, feedback: r.feedback, createdAt: r.createdAt?.toISOString?.() ?? r.createdAt }))
     return NextResponse.json(normalized)
