@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:generate": "drizzle-kit generate --dialect=postgresql --schema=src/schema.ts --out=./drizzle"
+    "db:generate": "drizzle-kit generate --dialect=postgresql --schema=src/db/schema.ts --out=./drizzle",
+    "db:push": "drizzle-kit push --schema=src/db/schema.ts --dialect=postgresql"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -31,11 +32,11 @@
     "lucide-react": "^0.544.0",
     "matter-js": "^0.20.0",
     "motion": "^12.23.22",
-  "next": "15.1.7",
-  "ogl": "^1.0.11",
-  "postprocessing": "^6.37.8",
-  "react": "^18.2.0",
-  "react-dom": "^18.2.0",
+    "next": "15.1.7",
+    "ogl": "^1.0.11",
+    "postprocessing": "^6.37.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
     "recharts": "^3.3.0",
     "tailwind-merge": "^3.3.1",
@@ -46,8 +47,8 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
-  "@types/react": "^18",
-  "@types/react-dom": "^18",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "@types/request": "^2.48.13",
     "autoprefixer": "^10.4.21",
     "dotenv": "^17.2.2",

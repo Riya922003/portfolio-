@@ -1,11 +1,9 @@
 "use client"
-
 import React from "react"
 import { TrendingUp, Users, Clock, RefreshCw } from "lucide-react"
 import type { AnalyticsData } from "../../types/analytics"
 import dynamic from 'next/dynamic'
 import KpiCard from "@/components/dashboard/KpiCard"
-// Chart components removed — KPI cards will render without charts
 import AreaViewsChart from "@/components/dashboard/AreaViewsChart"
 import TopPagesChart from "@/components/dashboard/TopPagesChart"
 import DevicePieChart from "@/components/dashboard/DevicePieChart"

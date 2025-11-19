@@ -1,10 +1,9 @@
 "use client";
-
 import Image from 'next/image'
 import { FaReact, FaDocker, FaGitAlt, FaNodeJs, FaGithub, FaLinux } from 'react-icons/fa'
 import { SiTypescript, SiPostgresql, SiTailwindcss, SiFramer, SiSvelte, SiExpress, SiMongodb, SiPrisma, SiRedux, SiBun, SiVite, SiDrizzle, SiShadcnui, SiNetlify, SiFigma, SiSass, SiBootstrap, SiGit, SiAmazon, SiVercel, SiHeroku } from 'react-icons/si'
 import { TbBrandNextjs } from 'react-icons/tb'
-import { Github, Linkedin, Server, ShieldCheck, Database, Zap, Code, Mail, Twitter, ChartBar, TrendingUp, Clock } from 'lucide-react'
+import { Github, Linkedin, Server, ShieldCheck, Database, Zap, Code, Mail, Twitter, ChartBar, TrendingUp, Clock, ArrowLeft, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import dynamic from 'next/dynamic'
 const Globe = dynamic(() => import('@/components/Globe'), { ssr: false })
@@ -14,17 +13,16 @@ import TechMarquee from '@/components/TechMarquee'
 import ElectricBorder from '@/components/ElectricBorder'
 const PixelCard = dynamic(() => import('@/components/PixelCard'), { ssr: false })
 const RippleGrid = dynamic(() => import('@/components/RippleGrid'), { ssr: false })
-const Particles = dynamic(() => import('@/components/Particles'), { ssr: false })
 import InsideScoopCard from '@/components/InsideScoopCard'
 import ContactModal from '@/components/ContactModal'
+import FeedbackForm from '@/components/FeedbackForm'
+import FeedbacksCarousel from '@/components/FeedbacksCarousel'
 import { Users } from 'lucide-react'
-import NewProjectCarousel from '@/components/NewProjectCarousel'
+import ProjectCard from '@/components/ProjectCard'
 import ContestRatings from '@/components/ContestRatings'
 import Contributions from '@/components/Contributions'
 import KpiCard from '@/components/dashboard/KpiCard'
 import PerformancePanel from '@/components/dashboard/PerformancePanel'
-// Chart components removed — KPI cards will render without charts
-import AutoSlideshow from '@/components/AutoSlideshow'
 import CursorFollow from '@/components/ui/cursor-follow'
 import { WobbleCard } from "@/components/ui/wobble-card";
 import WobbleCardDemo from '@/components/wobble-card-demo';
@@ -40,11 +38,20 @@ const handleAnimationComplete = () => {
   console.log('All letters have animated!');
 };
 
+type ProjectRecord = {
+  id: number;
+  name: string;
+  description: string;
+  tech: string[];
+  link: string;
+  image?: string;
+};
+
 const Home = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const [projects, setProjects] = useState<ProjectRecord[]>([]);
 
     useEffect(() => {
-        // Auto-skip to main page after 8 seconds if no interaction
         const autoSkipTimer = setTimeout(() => {
             setIsLoading(false);
             document.body.style.cursor = 'default';
@@ -54,14 +61,45 @@ const Home = () => {
         return () => clearTimeout(autoSkipTimer);
     }, []);
 
-    // Function to manually skip the loader (can be called from Loader component)
+    useEffect(() => {
+        const loadProjects = async () => {
+            try {
+                const res = await fetch("/api/projects");
+				if (res.ok) {
+					const data = await res.json();
+					// DEBUG: inspect raw projects returned from API (browser console)
+					console.debug('[home] /api/projects ->', data);
+
+					// If a project named (or containing) "keynote" exists,
+					// move it to the front of the list so it appears first.
+					const prioritizeKeynote = (items: ProjectRecord[] | any[]) => {
+						if (!Array.isArray(items) || items.length === 0) return items || [];
+						const lowered = items.map((it) => ({
+							item: it,
+							name: (it?.name || '').toString().toLowerCase()
+						}));
+						const idx = lowered.findIndex(x => x.name.includes('keynote') || x.name.includes('keynotes'));
+						if (idx <= 0) return items || [];
+						const copy = [...items];
+						const [picked] = copy.splice(idx, 1);
+						return [picked, ...copy];
+					}
+
+					setProjects(prioritizeKeynote(data || []));
+                }
+            } catch (err) {
+                console.error("Failed to load projects:", err);
+            }
+        };
+        loadProjects();
+    }, []);
+
     const skipLoader = () => {
         setIsLoading(false);
         document.body.style.cursor = 'default';
         window.scrollTo(0, 0);
     };
 
-	// Show loader while loading
 	if (isLoading) {
 		return <Loader onComplete={skipLoader} />;
 	}
@@ -78,22 +116,7 @@ const Home = () => {
 />
 					</div>
 					
-					{/* Ballpit background for hero */}
-					<div className="absolute inset-0 z-0">
-						{/* Ballpit background for hero — explicit height so canvas can size and we position canvas absolute to fill */}
-						<div style={{position: 'relative', overflow: 'hidden', height: '600px', width: '100%'}}>
-							<Particles
-								particleColors={["#ffffff", "#ffffff"]}
-								particleCount={200}
-								particleSpread={10}
-								speed={0.1}
-								particleBaseSize={100}
-								moveParticlesOnHover={true}
-								alphaParticles={false}
-								disableRotation={false}
-							/>
-						</div>
-					</div>
+					{/* Background removed - Particles component deleted */}
 					<div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 items-center">
 						{/* Left column - Services (moved left like inspiration) */}
 						<aside className="order-3 md:order-1">
@@ -152,6 +175,7 @@ const Home = () => {
 												height={320}
 												alt="Riya Gupta"
 												className="rounded-full object-cover w-[320px] h-[320px]"
+												priority
 											/>
 										</div>
 									</div>
@@ -351,11 +375,77 @@ const Home = () => {
 				</section>
 
 								<section className="mt-12">
-										<h2 className="text-2xl font-semibold mb-4">Featured Projects</h2>
-										<AutoSlideshow interval={4500}>
-											<NewProjectCarousel />
-										</AutoSlideshow>
-								</section>
+					<div className="flex items-center justify-between mb-4">
+						<div>
+							<h2 className="text-2xl font-semibold">Featured Projects</h2>
+							<p className="text-neutral-400 mt-2">Hover over cards to see project demos in action</p>
+						</div>
+						{projects.length > 3 && (
+							<div className="flex gap-2">
+								<button
+									onClick={() => {
+										const container = document.getElementById('projects-scroll-container');
+										if (container) {
+											container.scrollBy({ left: -380, behavior: 'smooth' });
+										}
+									}}
+									className="p-2 rounded-md border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800 transition-colors"
+									aria-label="Scroll left"
+								>
+									<ArrowLeft className="w-5 h-5" />
+								</button>
+								<button
+									onClick={() => {
+										const container = document.getElementById('projects-scroll-container');
+										if (container) {
+											container.scrollBy({ left: 380, behavior: 'smooth' });
+										}
+									}}
+									className="p-2 rounded-md border border-neutral-800 bg-neutral-900/50 hover:bg-neutral-800 transition-colors"
+									aria-label="Scroll right"
+								>
+									<ArrowRight className="w-5 h-5" />
+								</button>
+							</div>
+						)}
+					</div>
+					
+					{projects.length > 0 ? (
+						<div 
+							id="projects-scroll-container"
+							className="flex gap-6 overflow-x-auto overflow-y-hidden pb-4 snap-x snap-mandatory scrollbar-hide"
+							style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+						>
+							{projects.map((project) => (
+								<div key={project.id} className="flex-shrink-0 w-[calc(33.333%-16px)] min-w-[320px] snap-center">
+									<ProjectCard
+										name={project.name}
+										description={project.description}
+										tech={project.tech}
+										link={project.link}
+										image={project.image}
+										gifPath={(() => {
+											if (!project.image) return "/assets/gif/placeholder.gif";
+											try {
+												const parts = project.image.split("/");
+												const file = parts.length ? parts[parts.length - 1] : "";
+												const basename = file.split(".").slice(0, -1).join(".") || file;
+												if (basename) return `/assets/gif/${basename}.gif`;
+											} catch (e) {
+												console.error("Error deriving GIF path:", e);
+											}
+											return "/assets/gif/placeholder.gif";
+										})()}
+									/>
+								</div>
+							))}
+						</div>
+					) : (
+						<div className="p-6 rounded-lg border border-neutral-800 bg-neutral-900/40 text-center text-neutral-400">
+							Loading projects...
+						</div>
+					)}
+				</section>
 
 				
 
@@ -428,6 +518,19 @@ const Home = () => {
 							</div>
 						)
 					})()}
+				</section>
+
+				{/* Feedback form placed below Secret Sauce */}
+				{/* Live feedback carousel */}
+				<section>
+					<FeedbacksCarousel />
+				</section>
+
+				{/* Feedback form placed below Secret Sauce */}
+				<section className="mt-8 mb-10">
+					<div className="mx-auto max-w-4xl px-2">
+						<FeedbackForm />
+					</div>
 				</section>
 
 				{/* Hyperspeed Card Section */}

@@ -21,3 +21,10 @@ export const messages = pgTable('messages', {
   message: text('message'),
   createdAt: timestamp('created_at').defaultNow(),
 });
+
+export const feedbacks = pgTable('feedbacks', {
+  id: serial('id').primaryKey(),
+  name: varchar('name', { length: 256 }),
+  feedback: text('feedback'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
